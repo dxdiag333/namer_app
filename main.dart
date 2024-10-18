@@ -35,23 +35,28 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   // mengisi variable current dengan 2 nilai random 
   var current = WordPair.random();
+  void getNext() {
+    current = WordPair.random();
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var pair = appState.current;
 
     return Scaffold( // base layout
       body: Column(
         children: [
-          Text('hello world fufufafa:'),
-          Text(appState.current.asLowerCase),
+          Text('hello world:'),
+          Text(pair.asLowerCase),
           ElevatedButton( // create button
             onPressed: () { // bila di tekan tombolnya maka akan exekusi function shadow dengan value print hello world
-              print("hello world");
+              appState.getNext();
             },
-            child: Text("klik saja"), // ini adalah teks dari button
+            child: Text("klik"), // ini adalah teks dari button
           )
         ],
       ),
